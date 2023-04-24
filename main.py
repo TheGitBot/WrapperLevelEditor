@@ -1,5 +1,6 @@
 from model.level import Level
 from model.level import Cell
+from model.level import Colors
 
 if __name__ == '__main__':
     level = Level()
@@ -10,10 +11,10 @@ if __name__ == '__main__':
             level.set_cell(cell, row, col)
     green = Cell()
     green.isActive = True
-    green.gamePiece = 'green'
+    green.gamePiece = Colors.GREEN
     goal = Cell()
     goal.isActive = True
-    goal.goal = 'green'
+    goal.goal = Colors.GREEN
     level.set_cell(green, 2, 0)
     level.set_cell(goal, 2, 4)
     distance = Cell()

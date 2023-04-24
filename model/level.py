@@ -1,8 +1,17 @@
+from enum import Enum
+
+
+class Colors(Enum):
+    GREEN = 1,
+    RED = 2,
+    WILDCARD = 3
+
+
 class Cell:
-    def __init__(self):
-        self.isActive = False
-        self.goal = None
-        self.gamePiece = None
+    def __init__(self, is_active: bool = False, goal: Colors = None, game_piece: Colors = None):
+        self.isActive = is_active
+        self.goal = goal
+        self.gamePiece = game_piece
 
     def get_p8_mapping(self) -> int:
         """
@@ -14,14 +23,21 @@ class Cell:
         4  -> red piece
         8  -> red goal
         """
-        if not self.isActive: return -1
+        if not self.isActive:
+            return -1
         mapping = 0
-        if self.goal == 'green': mapping += 2
-        elif self.goal == 'red': mapping += 8
-        elif self.goal == 'wild': mapping += 10
-        if self.gamePiece == 'green': mapping += 1
-        elif self.gamePiece == 'red': mapping += 4
-        elif self.gamePiece == 'wild': mapping += 5
+        if self.goal == Colors.GREEN:
+            mapping += 2
+        elif self.goal == Colors.RED:
+            mapping += 8
+        elif self.goal == Colors.WILDCARD:
+            mapping += 10
+        if self.gamePiece == Colors.GREEN:
+            mapping += 1
+        elif self.gamePiece == Colors.RED:
+            mapping += 4
+        elif self.gamePiece == Colors.WILDCARD:
+            mapping += 5
         return mapping
 
 
@@ -92,9 +108,9 @@ class Level:
         bounds = self.get_bounds()
         out_string = ""
         out_string += " {\n"
-        for row in range(bounds[0][0], bounds[1][0]+1):
+        for row in range(bounds[0][0], bounds[1][0] + 1):
             out_string += "  {"
-            for col in range(bounds[0][1], bounds[1][1]+1):
+            for col in range(bounds[0][1], bounds[1][1] + 1):
                 cell = self.__map[row][col]
                 out_string += str(cell.get_p8_mapping())
                 if col != bounds[1][1]:
